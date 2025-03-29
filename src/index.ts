@@ -1,26 +1,20 @@
-import { PrismaClient } from '@prisma/client'
-
-const prisma = new PrismaClient()
+import {prisma} from "../prisma/PrismaClient";
+import dotenv from 'dotenv';
+import express, { Application } from 'express';
+import AuthRoutes from "./Routes/AuthRoutes";
 
 async function main() {
-    const newUser = await prisma.user.create({
-        data: {
-            name: 'Alice',
-            email: 'alice23@prisma.io',
-            posts: {
-                create: {
-                    title: 'Hello World',
-                },
-            },
-        },
-    })
-    console.log('Created new user: ', newUser)
+    dotenv.config({ path: '../.env' });
+    const app: Application = express();
+    app.use(express.json());
+    app.use(express.urlencoded({ extended: true }));
 
-    const allUsers = await prisma.user.findMany({
-        include: { posts: true },
-    })
-    console.log('All users: ')
-    console.dir(allUsers, { depth: null })
+    app.use('/api/auth', AuthRoutes);
+
+    const port = process.env.PORT || 3000;
+    app.listen(port, () => {
+        console.log(`Server is running on port ${port}`);
+    });
 }
 
 main()
