@@ -9,12 +9,12 @@ export const authenticateToken = (
     req: AuthRequest,
     res: Response,
     next: NextFunction
-) => {  // Remove explicit return type
+) => {
     const authHeader = req.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
         res.status(401).json({ message: 'Access denied, token missing' });
-        return; // End execution here instead of returning the response
+        return;
     }
 
     const token = authHeader.split(' ')[1];
