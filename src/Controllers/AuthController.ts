@@ -31,7 +31,7 @@ export class AuthController {
         const {email, password, fullname, userRole} = req.body;
 
         const request: UserRegistrationRequest = new UserRegistrationRequest(email, password, fullname, userRole);
-        console.log(this.authService);
+
         const createdUser: boolean = await this.authService.register(request);
 
         if (createdUser){

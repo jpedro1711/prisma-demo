@@ -15,6 +15,10 @@ export class AuthService {
     }
 
     async register(user: UserRegistrationRequest): Promise<boolean> {
+        const isValid = await user.validate();
+
+        if (!isValid) return false;
+
         const userExists: User | null = await this.userRepository.findByEmail(user.email);
 
         if (userExists) {
