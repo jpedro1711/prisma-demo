@@ -5,10 +5,12 @@ import LoginRoutes from "./Features/Users/Login/LoginRoutes";
 import RegistrationRoutes from "./Features/Users/Registration/RegistrationRoutes";
 import ProfileRoutes from "./Features/Users/Profile/ProfileRoutes";
 import {ErrorMiddleware} from "./Shared/Middlewares/ErrorMiddleware";
+import nodemailer from "nodemailer";
 
 async function main() {
     dotenv.config({ path: '../.env' });
     const app: Application = express();
+
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
 
