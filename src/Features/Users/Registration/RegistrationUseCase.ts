@@ -9,9 +9,7 @@ export class RegistrationUseCase {
     constructor(private repository: RegistrationRepository) {}
 
     async execute(request: UserRegistrationRequest): Promise<boolean> {
-        const isValid = await request.validate();
-
-        if (!isValid) throw new AppException("invalid registration request", 400);
+        
 
         const userExists: User | null = await this.repository.findByEmail(request.email);
 
